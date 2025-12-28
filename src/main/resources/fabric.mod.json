@@ -13,8 +13,8 @@
     "issues": "https://github.com/ChengZhiFy/YetAnotherBingo-TeamChest/issues"
   },
   "license": "MIT",
-
-  "environment": "server",
+  "icon": "assets/yetanotherbingo-teamchest/icon.png",
+  "environment": "*",
 
   "entrypoints": {
     "main": [
@@ -33,8 +33,6 @@
     "fabric-language-kotlin": "*"
   },
   "custom": {
-    "modmenu": {
-      "server_only": true
-    }
+    "modmenu": {}
   }
 }
