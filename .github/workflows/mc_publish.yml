@@ -77,7 +77,7 @@ jobs:
         api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}
         file: build/libs/*.jar
         game-id: 432
-        project-id: YOUR_PROJECT_ID
+        project-id: 1420637
         release-type: release
         changelog: 'See GitHub release notes.'
         changelog-type: markdown
