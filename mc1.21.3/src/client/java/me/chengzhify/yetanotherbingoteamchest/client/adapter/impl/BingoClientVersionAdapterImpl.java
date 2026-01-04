@@ -6,7 +6,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 public class BingoClientVersionAdapterImpl implements ClientVersionAdapter {
-    @Override
+
     public void registerKeyBinding() {
         KeyBinding openTeamChestKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.yetanotherbingo-teamchest.open",
