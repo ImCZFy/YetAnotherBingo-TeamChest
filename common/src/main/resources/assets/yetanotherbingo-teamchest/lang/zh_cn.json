@@ -1,0 +1,14 @@
+{
+  "yetanotherbingo-teamchest.message.toggle": "队伍箱现在已 ",
+  "yetanotherbingo-teamchest.message.enabled": "启用",
+  "yetanotherbingo-teamchest.message.disabled": "禁用",
+  "yetanotherbingo-teamchest.error.players_only": "只有玩家可以使用此命令！",
+  "yetanotherbingo-teamchest.error.disabled": "队伍箱目前已禁用！",
+  "yetanotherbingo-teamchest.error.game_not_started": "游戏尚未开始！",
+  "yetanotherbingo-teamchest.error.no_team": "找不到你的队伍！",
+  "yetanotherbingo-teamchest.error.no_team_id": "无法获取你的队伍 ID！",
+  "yetanotherbingo-teamchest.container.team_chest": "队伍箱",
+  "key.yetanotherbingo-teamchest.open": "打开队伍箱",
+  "category.yetanotherbingo-teamchest": "Yet Another Bingo 队伍箱"
+}
+

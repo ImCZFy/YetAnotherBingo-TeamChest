@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "yetanotherbingo-teamchest",
+  "version": "${version}",
+  "name": "Yet Another Bingo Team Chest",
+  "description": "Shared team chest integration for Yet Another Bingo.",
+  "authors": [
+    "ChengZhiFy"
+  ],
+  "contact": {
+    "homepage": "https://github.com/ChengZhiFy/YetAnotherBingo-TeamChest",
+    "sources": "https://github.com/ChengZhiFy/YetAnotherBingo-TeamChest",
+    "issues": "https://github.com/ChengZhiFy/YetAnotherBingo-TeamChest/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/yetanotherbingo-teamchest/icon.png",
+
+  "mixins": [
+    "yetanotherbingo-teamchest.mixins.json",
+    {
+      "config": "yetanotherbingo-teamchest.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+
+  "entrypoints": {
+    "main": [
+      "me.chengzhify.yetanotherbingoteamchest.YetAnotherBingoTeamChest"
+    ],
+    "client": [
+      "me.chengzhify.yetanotherbingoteamchest.client.ClientInitializer"
+    ]
+  },
+
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": ">=1.20.6",
+    "fabric-api": "*",
+    "java": ">=21",
+    "fabric-key-binding-api-v1": "*",
+    "yet-another-minecraft-bingo": "*"
+  },
+  "suggests": {
+    "fabric-language-kotlin": "*"
+  },
+  "custom": {
+    "modmenu": {}
+  }
+}

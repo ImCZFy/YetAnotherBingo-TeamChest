@@ -1,0 +1,96 @@
+name: Publish Mod
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish'
+        required: true
+      minecraft_version:
+        description: 'Minecraft version'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Build the project
+      run: ./gradlew build
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        path: build/libs/*.jar
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-artifacts
+
+    - name: Publish to GitHub
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.inputs.version }}
+        release_name: Release ${{ github.event.inputs.version }}
+        draft: false
+        prerelease: false
+
+    - name: Upload JAR to GitHub Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/libs/*.jar
+        asset_name: YetAnotherBingo-TeamChest-${{ github.event.inputs.minecraft_version }}-${{ github.event.inputs.version }}.jar
+        asset_content_type: application/java-archive
+
+    - name: Publish to CurseForge
+      uses: CurseForge/Upload-Action@v1
+      with:
+        api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}
+        file: build/libs/*.jar
+        game-id: 432
+        project-id: YOUR_PROJECT_ID
+        release-type: release
+        changelog: 'See GitHub release notes.'
+        changelog-type: markdown
+        display-name: YetAnotherBingo-TeamChest-${{ github.event.inputs.minecraft_version }}-${{ github.event.inputs.version }}
+
+    - name: Publish to Modrinth
+      uses: modrinth/modrinth-upload@v1
+      with:
+        token: ${{ secrets.MODRINTH_API_TOKEN }}
+        project_id: LzfWcB6J
+        file: build/libs/*.jar
+        version_number: ${{ github.event.inputs.version }}
+        version_name: YetAnotherBingo-TeamChest-${{ github.event.inputs.minecraft_version }}-${{ github.event.inputs.version }}
+        changelog: 'See GitHub release notes.'
+        game_versions: ${{ github.event.inputs.minecraft_version }}
+        loaders: fabric

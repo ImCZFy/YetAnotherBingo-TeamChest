@@ -1,0 +1,18 @@
+dependencies {
+    implementation project(':common')
+    minecraft libs.minecraft1204
+    mappings "net.fabricmc:yarn:1.20.4+build.1:v2"
+    modImplementation libs.fabric.loader
+    modImplementation libs.fabricApi1204
+    implementation project(":common")
+}
+sourceSets {
+    main {
+        java.srcDirs += project(':common').sourceSets.main.java.srcDirs
+        resources.srcDirs += project(':common').sourceSets.main.resources.srcDirs
+    }
+}
+loom {
+    splitEnvironmentSourceSets()
+}
+base.archivesName = "YetAnotherBingo-TeamChest-mc1.20.4"

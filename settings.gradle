@@ -7,3 +7,24 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+rootProject.name = 'YetAnotherBingo-TeamChest'
+include 'common'
+include 'mc1.21.8'
+include 'mc1.21.9'
+include 'mc1.21.10'
+include 'mc1.20.6'
+include 'mc1.21.7'
+include 'mc1.21.6'
+include 'mc1.21.5'
+include 'mc1.21.4'
+include 'mc1.21.3'
+include 'mc1.21.2'
+include 'mc1.21.1'
+include 'mc1.21'
+include 'mc1.20.5'
+include 'mc1.20.4'
+include 'mc1.20.3'
+include 'mc1.20.2'
+include 'mc1.20.1'
+include 'mc1.20'

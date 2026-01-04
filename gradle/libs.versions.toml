@@ -1,0 +1,79 @@
+[versions]
+minecraft-1-21-10 = "1.21.10"
+minecraft-1-21-9 = "1.21.9"
+minecraft-1-21-8 = "1.21.8"
+minecraft-1-21-7 = "1.21.7"
+minecraft-1-21-6 = "1.21.6"
+minecraft-1-21-5 = "1.21.5"
+minecraft-1-21-4 = "1.21.4"
+minecraft-1-21-3 = "1.21.3"
+minecraft-1-21-2 = "1.21.2"
+minecraft-1-21-1 = "1.21.1"
+minecraft-1-21 = "1.21"
+minecraft-1-20-6 = "1.20.6"
+minecraft-1-20-5 = "1.20.5"
+minecraft-1-20-4 = "1.20.4"
+minecraft-1-20-3 = "1.20.3"
+minecraft-1-20-2 = "1.20.2"
+minecraft-1-20-1 = "1.20.1"
+minecraft-1-20 = "1.20"
+
+loader = "0.18.4"
+fabric-api-1-21-10 = "0.138.4+1.21.10"
+fabric-api-1-21-9 = "0.134.1+1.21.9"
+fabric-api-1-21-8 = "0.136.1+1.21.8"
+fabric-api-1-21-7 = "0.129.0+1.21.7"
+fabric-api-1-21-6 = "0.128.2+1.21.6"
+fabric-api-1-21-5 = "0.128.2+1.21.5"
+fabric-api-1-21-4 = "0.119.4+1.21.4"
+fabric-api-1-21-3 = "0.114.1+1.21.3"
+fabric-api-1-21-2 = "0.106.1+1.21.2"
+fabric-api-1-21-1 = "0.116.7+1.21.1"
+fabric-api-1-21 = "0.100.0+1.21"
+fabric-api-1-20-6 = "0.100.0+1.20.6"
+fabric-api-1-20-5 = "0.97.0+1.20.5"
+fabric-api-1-20-4 = "0.96.0+1.20.4"
+fabric-api-1-20-3 = "0.91.0+1.20.3"
+fabric-api-1-20-2 = "0.90.0+1.20.2"
+fabric-api-1-20-1 = "0.88.1+1.20.1"
+fabric-api-1-20 = "0.83.0+1.20"
+
+[libraries]
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "loader" }
+fabricApi12110 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-10" }
+fabricApi1219 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-9" }
+fabricApi1218 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-8" }
+fabricApi1217 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-7" }
+fabricApi1216 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-6" }
+fabricApi1215 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-5" }
+fabricApi1214 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-4" }
+fabricApi1213 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-3" }
+fabricApi1212 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-2" }
+fabricApi1211 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21-1" }
+fabricApi121 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-21" }
+fabricApi1206 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-20-6" }
+fabricApi1205 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-20-5" }
+fabricApi1204 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-20-4" }
+fabricApi1203 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-20-3" }
+fabricApi1202 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-20-2" }
+fabricApi1201 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-20-1" }
+fabricApi120 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-1-20" }
+
+minecraft12110 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-10" }
+minecraft1219 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-9" }
+minecraft1218 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-8" }
+minecraft1217 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-7" }
+minecraft1216 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-6" }
+minecraft1215 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-5" }
+minecraft1214 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-4" }
+minecraft1213 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-3" }
+minecraft1212 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-2" }
+minecraft1211 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21-1" }
+minecraft121 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-21" }
+minecraft1206 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-20-6" }
+minecraft1205 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-20-5" }
+minecraft1204 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-20-4" }
+minecraft1203 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-20-3" }
+minecraft1202 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-20-2" }
+minecraft1201 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-20-1" }
+minecraft120 = { module = "com.mojang:minecraft", version.ref = "minecraft-1-20" }

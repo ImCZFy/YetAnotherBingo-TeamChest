@@ -1,61 +1,56 @@
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT'
+    id 'fabric-loom' version '1.14-SNAPSHOT' apply false
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
 }
 
-version = project.mod_version
-group = project.maven_group
 
-base {
-    archivesName = project.archives_base_name
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'fabric-loom'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.modrinth.minotaur'
+    group = "me.chengzhify"
+    version = "1.1-SNAPSHOT"
 
-loom {
-    splitEnvironmentSourceSets()
-
-    mods {
-        "yetanotherbingo-teamchest" {
-            sourceSet sourceSets.main
+    repositories {
+        mavenCentral()
+        maven {
+            name = "Yet Another Bingo"
+            url = "https://gitlab.com/api/v4/projects/48318565/packages/maven"
+            content {
+                includeGroup("me.jfenn.bingo")
+            }
+        }
+        maven {
+            name = "Fabric"
+            url = "https://maven.fabricmc.net/"
         }
     }
-}
 
-repositories {
-    mavenCentral()
-    maven {
-        name = "Yet Another Bingo"
-        url = "https://gitlab.com/api/v4/projects/48318565/packages/maven"
-        content {
-            includeGroup("me.jfenn.bingo")
+    dependencies {
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
+        modImplementation "me.jfenn.bingo:api:2.9.3"
+    }
+
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(21)
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 21
+    }
+
+    tasks.withType(Jar).configureEach {
+        destinationDirectory.set(file("${rootProject.projectDir}/build/libs"))
+    }
+
+    processResources {
+        inputs.property "version", project.version
+        filesMatching("fabric.mod.json") {
+            expand "version": project.version
         }
     }
-    maven {
-        name = "Fabric"
-        url = "https://maven.fabricmc.net/"
-    }
-
-}
-
-dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
-
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    modImplementation "me.jfenn.bingo:api:2.9.3"
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
-    withSourcesJar()
 }

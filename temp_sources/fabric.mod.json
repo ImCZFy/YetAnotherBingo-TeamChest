@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "yet-another-minecraft-bingo-api",
+  "name": "Yet Another Minecraft BINGO",
+  "version": "$version",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": ">=1.20",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "contact": {
+    "homepage": "https://horrific.dev/bingo/",
+    "sources": "https://gitlab.com/horrificdev/bingo/",
+    "issues": "https://gitlab.com/horrificdev/bingo/-/issues/"
+  },
+  "authors": [
+    "fennifith"
+  ],
+  "description": "API interfaces for Yet Another Bingo",
+  "custom": {
+    "modmenu": {
+      "parent": "yet-another-minecraft-bingo",
+      "badges": ["library"],
+      "links": {
+        "Discord": "https://discord.horrific.dev"
+      }
+    }
+  }
+}

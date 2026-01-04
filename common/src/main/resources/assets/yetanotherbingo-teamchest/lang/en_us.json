@@ -1,0 +1,14 @@
+{
+  "yetanotherbingo-teamchest.message.toggle": "Team chest is now ",
+  "yetanotherbingo-teamchest.message.enabled": "enabled",
+  "yetanotherbingo-teamchest.message.disabled": "disabled",
+  "yetanotherbingo-teamchest.error.players_only": "Only players can use this command!",
+  "yetanotherbingo-teamchest.error.disabled": "Team chest is now disabled!",
+  "yetanotherbingo-teamchest.error.game_not_started": "The game hasn't started yet!",
+  "yetanotherbingo-teamchest.error.no_team": "Cannot find your team!",
+  "yetanotherbingo-teamchest.error.no_team_id": "Cannot fetch your team ID!",
+  "yetanotherbingo-teamchest.container.team_chest": "Team Chest",
+  "key.yetanotherbingo-teamchest.open": "Open Team Chest",
+  "category.yetanotherbingo-teamchest": "Yet Another Bingo Team Chest"
+}
+
