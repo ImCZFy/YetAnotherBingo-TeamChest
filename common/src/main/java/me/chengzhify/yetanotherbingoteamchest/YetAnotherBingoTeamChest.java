@@ -10,22 +10,17 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import net.minecraft.text.Text;
-import net.minecraft.util.Clearable;
 import net.minecraft.util.Formatting;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class YetAnotherBingoTeamChest implements ModInitializer {
 
-    private static final Map<String, SimpleInventory> TEAM_INVENTORIES = new HashMap<>();
+    // private static final Map<String, SimpleInventory> TEAM_INVENTORIES = new HashMap<>();
 
     private static MinecraftServer server;
     private static boolean enabled = true;
@@ -35,14 +30,11 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
     @Override
     public void onInitialize() {
         ADAPTER = VersionAdapterProvider.get();
-
         ServerLifecycleEvents.SERVER_STARTED.register(s -> server = s);
         ServerLifecycleEvents.SERVER_STOPPED.register(s -> server = null);
-
         registerCommands();
         registerBingoHooks();
     }
-
 
     private void registerCommands() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
@@ -71,12 +63,14 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
 
     private void registerBingoHooks() {
         BingoEvents.GAME_ENDED.register((e) -> {
-            TEAM_INVENTORIES.values().forEach(c -> c.clear());
-            TEAM_INVENTORIES.clear();
+            if (server != null) {
+                ADAPTER.clearAllTeamInventories(server);
+            }
         });
         BingoEvents.GAME_RESET.register((e) -> {
-            TEAM_INVENTORIES.values().forEach(c -> c.clear());
-            TEAM_INVENTORIES.clear();
+            if (server != null) {
+                ADAPTER.clearAllTeamInventories(server);
+            }
         });
     }
 
@@ -143,14 +137,9 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
             return 0;
         }
 
-        Inventory inventory =
-                TEAM_INVENTORIES.computeIfAbsent(teamId, id -> new SimpleInventory(27));
+        Inventory inventory = ADAPTER.getTeamInventory(source.getServer(), teamId);
 
-        ADAPTER.openTeamChest(
-                player,
-                inventory,
-                Text.literal("Team Chest")
-        );
+        ADAPTER.openTeamChest(player, inventory, Text.translatableWithFallback("yetanotherbingo-teamchest.container.team_chest", "Team Chest"));
         return Command.SINGLE_SUCCESS;
     }
 }

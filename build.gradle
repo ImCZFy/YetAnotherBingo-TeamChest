@@ -1,7 +1,7 @@
 plugins {
     id 'fabric-loom' version '1.14-SNAPSHOT' apply false
     id 'maven-publish'
-    id "com.modrinth.minotaur" version "2.+"
+    id "com.modrinth.minotaur" version "2.+" apply false
 }
 
 
@@ -12,7 +12,7 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'com.modrinth.minotaur'
     group = "me.chengzhify"
-    version = "1.1-SNAPSHOT"
+    version = "1.1.1-release"
 
     repositories {
         mavenCentral()
@@ -43,7 +43,7 @@ subprojects {
         it.options.release = 21
     }
 
-    tasks.withType(Jar).configureEach {
+    tasks.named("remapJar") {
         destinationDirectory.set(file("${rootProject.projectDir}/build/libs"))
     }
 
@@ -51,6 +51,29 @@ subprojects {
         inputs.property "version", project.version
         filesMatching("fabric.mod.json") {
             expand "version": project.version
+        }
+    }
+
+    modrinth {
+        token = System.getenv("MODRINTH_TOKEN") // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
+        projectId = "LzfWcB6J" // This can be the project ID or the slug. Either will work!
+        // 动态设置版本号，格式如: 1.1-SNAPSHOT-mc1.20.6
+        versionNumber = "${project.version}-${project.name}"
+        versionType = "release" // This is the default -- can also be `beta` or `alpha`
+        uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
+        // 动态提取游戏版本 (例如 mc1.20.6 -> 1.20.6)
+        gameVersions = [project.name.replace("mc", "")]
+        loaders = ["fabric"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
+        dependencies { // A special DSL for creating dependencies
+            required.project "fabric-api" // Creates a new required dependency on Fabric API
+            required.project "yet-another-minecraft-bingo"
+        }
+    }
+
+    // common 模块通常不需要单独上传到 Modrinth
+    if (project.name == "common") {
+        tasks.named("modrinth").configure {
+            enabled = false
         }
     }
 }
