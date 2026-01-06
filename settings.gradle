@@ -10,6 +10,7 @@ pluginManagement {
 
 rootProject.name = 'YetAnotherBingo-TeamChest'
 include 'common'
+include 'mc1.21.11'
 include 'mc1.21.8'
 include 'mc1.21.9'
 include 'mc1.21.10'

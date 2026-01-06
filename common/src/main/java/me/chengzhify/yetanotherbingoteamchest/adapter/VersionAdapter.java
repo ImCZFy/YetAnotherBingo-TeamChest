@@ -21,4 +21,8 @@ public interface VersionAdapter {
 
     Text translatable(String key, String defaultText, Object... args);
 
+
+
+
+
 }

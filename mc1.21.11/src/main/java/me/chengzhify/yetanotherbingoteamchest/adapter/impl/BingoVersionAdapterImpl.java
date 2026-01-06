@@ -42,6 +42,8 @@ public class BingoVersionAdapterImpl implements VersionAdapter {
     public Text translatable(String key, String defaultText, Object... args) {
         return Text.translatableWithFallback(key, defaultText, args);
     }
+
+
 }
 
 

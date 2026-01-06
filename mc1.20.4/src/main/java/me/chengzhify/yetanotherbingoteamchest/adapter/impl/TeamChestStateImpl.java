@@ -69,7 +69,7 @@ public class TeamChestStateImpl extends PersistentState {
         return nbt;
     }
 
-    public static final PersistentState.Type<TeamChestStateImpl> TYPE = new PersistentState.Type<>(
+    public static final Type<TeamChestStateImpl> TYPE = new Type<>(
             TeamChestStateImpl::new,
             TeamChestStateImpl::fromNbt,
             null

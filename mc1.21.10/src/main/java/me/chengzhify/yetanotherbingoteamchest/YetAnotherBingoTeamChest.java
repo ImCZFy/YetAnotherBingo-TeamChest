@@ -9,6 +9,7 @@ import me.jfenn.bingo.api.BingoEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.command.CommandSource;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
@@ -20,7 +21,6 @@ import net.minecraft.util.Formatting;
 
 public class YetAnotherBingoTeamChest implements ModInitializer {
 
-    // private static final Map<String, SimpleInventory> TEAM_INVENTORIES = new HashMap<>();
 
     private static MinecraftServer server;
     private static boolean enabled = true;
@@ -82,11 +82,11 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
                         .formatted(Formatting.GRAY)
                         .append(
                                 Text.translatable(
-                        enabled
-                                ? "yetanotherbingo-teamchest.message.enabled"
-                                : "yetanotherbingo-teamchest.message.disabled",
-                        enabled ? "enabled" : "disabled"
-                ).formatted(enabled ? Formatting.GREEN : Formatting.RED)),
+                                        enabled
+                                                ? "yetanotherbingo-teamchest.message.enabled"
+                                                : "yetanotherbingo-teamchest.message.disabled",
+                                        enabled ? "enabled" : "disabled"
+                                ).formatted(enabled ? Formatting.GREEN : Formatting.RED)),
                 true
         );
 
