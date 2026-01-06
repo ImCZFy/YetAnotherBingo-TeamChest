@@ -1,7 +1,8 @@
-~~# Yet Another Bingo – Team Chest
+# Yet Another Bingo – Team Chest
 
-A server-side Fabric mod that provides a shared team chest for
-[Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo).
+[English](README.md) | [简体中文](README_zh-CN.md)
+
+A server-side Fabric mod that provides a shared team chest for [Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo).
 
 Players in the same Bingo team share a single inventory.
 
@@ -9,18 +10,18 @@ Players in the same Bingo team share a single inventory.
 
 ## Features
 
-- One shared chest per Bingo team
-- For clients and servers (Keybind(Default as "B") and localization available for clients)
-- Automatically resets when the Bingo game ends or resets
-- Supports all Minecraft versions supported by Yet Another Bingo
-- Compatible with all modern Fabric Loader versions
+- 🎯 One shared chest per Bingo team
+- 🖥️ For clients and servers (Keybind **B** and localization available for clients)
+- 🔄 Automatically resets when the Bingo game ends or resets
+- 📦 Supports all Minecraft versions supported by Yet Another Bingo
+- ✅ Compatible with all modern Fabric Loader versions
 
 ---
 
 ## Commands
 
 | Command | Description |
-|------|-----------|
+|---------|-------------|
 | `/teamchest` | Open your team's shared chest |
 | `/tc` | Alias for `/teamchest` |
 | `/teamchest toggle` | Enable or disable team chests (OP only) |
@@ -61,4 +62,4 @@ This mod is compiled once and works across:
 
 ## License
 
-MIT License~~
+MIT License
