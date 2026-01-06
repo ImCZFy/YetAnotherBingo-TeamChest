@@ -2,7 +2,6 @@ plugins {
     id 'fabric-loom' version '1.14-SNAPSHOT' apply false
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+" apply false
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
 }
 
 
@@ -12,7 +11,6 @@ subprojects {
     apply plugin: 'fabric-loom'
     apply plugin: 'maven-publish'
     apply plugin: 'com.modrinth.minotaur'
-    apply plugin: 'me.modmuss50.mod-publish-plugin'
     group = "me.chengzhify"
     version = "1.1.2-release"
 
@@ -71,25 +69,9 @@ subprojects {
             required.project "yet-another-minecraft-bingo"
         }
     }
-    publishMods {
-        file = remapJar.archiveFile
-        changelog = "release version ${project.version}"
-        type = STABLE
-        modLoaders.add("fabric")
 
-        curseforge {
-            projectId = "1420637"
-            projectSlug = "yet-another-bingo-team-chest"
-            accessToken = System.getenv("CURSEFORGE_TOKEN")
-            minecraftVersions = [project.name.replace("mc", "")]
-            requires("fabric-api")
-        }
-    }
     if (project.name == "common") {
         tasks.named("modrinth").configure {
-            enabled = false
-        }
-        tasks.named("publishMods").configure {
             enabled = false
         }
     }

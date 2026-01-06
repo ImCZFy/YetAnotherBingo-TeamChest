@@ -1,4 +1,15 @@
+
+
+<center>
+
 # Yet Another Bingo – Team Chest
+
+[![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/supported/fabric_vector.svg)](https://fabricmc.net/)
+[![Requires Fabric API](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/requires/fabric-api_vector.svg)](https://modrinth.com/mod/fabric-api)
+
+[![Available on Modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/yab-teamchest)
+[![Available on CurseForge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/yet-another-bingo-team-chest)
+[![Open Source on GitHub](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/github_vector.svg)](https://github.com/ImCZFy/YetAnotherBingo-TeamChest)
 
 [English](README.md) | [简体中文](README_zh-CN.md)
 
@@ -7,9 +18,12 @@ A server-side Fabric mod that provides a shared team chest for
 
 Players in the same Bingo team share a single inventory.
 
+</center>
+
 ---
 
 ## Features
+
 
 - One shared chest per Bingo team
 - For clients and servers (Keybind(Default as "B") and localization available for clients)
@@ -55,7 +69,7 @@ Clients can install this mod to enjoy keybind and localization.
 
 This mod is compiled once and works across:
 
-- Minecraft 1.20 → latest (tested up to 1.21.10)
+- Minecraft 1.20 → latest (tested up to 1.21.11)
 - All Fabric Loader versions supported by Fabric
 - Any server configuration supported by Yet Another Bingo
 
@@ -64,3 +78,4 @@ This mod is compiled once and works across:
 ## License
 
 MIT License
+
