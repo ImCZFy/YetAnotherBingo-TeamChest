@@ -1,7 +1,9 @@
-~~# Yet Another Bingo – Team Chest
+# Yet Another Bingo – Team Chest
+
+[English](README.md) | [简体中文](README_zh-CN.md)
 
 A server-side Fabric mod that provides a shared team chest for
-[Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo).
+<a href="https://modrinth.com/mod/yet-another-minecraft-bingo">Yet Another Bingo</a>.
 
 Players in the same Bingo team share a single inventory.
 
@@ -20,7 +22,7 @@ Players in the same Bingo team share a single inventory.
 ## Commands
 
 | Command | Description |
-|------|-----------|
+|---------|-------------|
 | `/teamchest` | Open your team's shared chest |
 | `/tc` | Alias for `/teamchest` |
 | `/teamchest toggle` | Enable or disable team chests (OP only) |
@@ -45,7 +47,7 @@ Players in the same Bingo team share a single inventory.
 4. Put `YetAnotherBingo-TeamChest.jar` into the `mods` folder
 5. Start the server
 
-Clients do **not** need to install this mod.
+Clients can install this mod to enjoy keybind and localization.
 
 ---
 
@@ -61,4 +63,4 @@ This mod is compiled once and works across:
 
 ## License
 
-MIT License~~
+MIT License
