@@ -2,7 +2,9 @@
 
 [English](README.md) | [简体中文](README_zh-CN.md)
 
-一个服务端 Fabric 模组，为 [Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo) 提供共享团队箱子功能。
+一个服务端 Fabric 模组，为
+<a href="https://modrinth.com/mod/yet-another-minecraft-bingo">Yet Another Bingo</a>
+提供共享团队箱子功能。
 
 同一 Bingo 团队中的玩家共享一个物品栏。
 
@@ -10,11 +12,11 @@
 
 ## 特性
 
-- 🎯 每个 Bingo 团队一个共享箱子
-- 🖥️ 支持客户端和服务器（客户端可用快捷键 **B** 和本地化）
-- 🔄 游戏结束或重置时自动重置
-- 📦 支持 Yet Another Bingo 所支持的所有 Minecraft 版本
-- ✅ 兼容所有现代 Fabric Loader 版本
+- 每个 Bingo 团队一个共享箱子
+- 支持客户端和服务器（客户端可用快捷键(默认为 "B") 和本地化）
+- 游戏结束或重置时自动重置
+- 支持 Yet Another Bingo 所支持的所有 Minecraft 版本
+- 兼容所有现代 Fabric Loader 版本
 
 ---
 
@@ -46,7 +48,7 @@
 4. 将 `YetAnotherBingo-TeamChest.jar` 放入 `mods` 文件夹
 5. 启动服务器
 
-客户端**无需**安装此模组。
+客户端可以安装此模组以享受快捷键和本地化功能。
 
 ---
 
