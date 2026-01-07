@@ -1,4 +1,13 @@
-# Yet Another Bingo – 团队箱子
+<center>
+
+# Yet Another Bingo – Team Chest
+
+[![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/supported/fabric_vector.svg)](https://fabricmc.net/)
+[![Requires Fabric API](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/requires/fabric-api_vector.svg)](https://modrinth.com/mod/fabric-api)
+
+[![Available on Modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/yab-teamchest)
+[![Available on CurseForge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/yet-another-bingo-team-chest)
+[![Open Source on GitHub](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/github_vector.svg)](https://github.com/ImCZFy/YetAnotherBingo-TeamChest)
 
 [English](README.md) | [简体中文](README_zh-CN.md)
 
@@ -7,6 +16,8 @@
 提供共享团队箱子功能。
 
 同一 Bingo 团队中的玩家共享一个物品栏。
+
+</center>
 
 ---
 
@@ -56,7 +67,7 @@
 
 此模组只需编译一次即可在以下环境运行：
 
-- Minecraft 1.20 → 最新版本（已测试至 1.21.10）
+- Minecraft 1.20 → 最新版本（已测试至 1.21.11）
 - Fabric 支持的所有 Fabric Loader 版本
 - Yet Another Bingo 支持的任何服务器配置
 
