@@ -11,7 +11,7 @@
 [![Available on CurseForge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/yet-another-bingo-team-chest)
 [![Open Source on GitHub](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/github_vector.svg)](https://github.com/ImCZFy/YetAnotherBingo-TeamChest)
 
-[English](README.md) | [简体中文](README_zh-CN.md)
+English | [简体中文](README_zh-CN.md)
 
 A server-side Fabric mod that provides a shared team chest for
 <a href="https://modrinth.com/mod/yet-another-minecraft-bingo">Yet Another Bingo</a>.
