@@ -120,7 +120,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
                                                 return 0;
                                             }
                                             if (YetAnotherBingoAPIImpl.isInTheSameTeam(sender.getUuid(), target.getUuid())) {
-                                                sender.teleport(target.getEntityWorld(),
+                                                sender.teleport(target.getWorld(),
                                                         target.getX(),
                                                         target.getY(),
                                                         target.getZ(),
@@ -202,7 +202,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
                                                 return 0;
                                             }
                                             if (YetAnotherBingoAPIImpl.isInTheSameTeam(sender.getUuid(), target.getUuid())) {
-                                                sender.teleport(target.getEntityWorld(),
+                                                sender.teleport(target.getWorld(),
                                                         target.getX(),
                                                         target.getY(),
                                                         target.getZ(),

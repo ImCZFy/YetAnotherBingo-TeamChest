@@ -1,7 +1,5 @@
 package me.chengzhify.yetanotherbingoteamchest.adapter;
 
-import net.fabricmc.loader.api.FabricLoader;
-
 public final class VersionAdapterProvider {
 
     private static final VersionAdapter INSTANCE = create();

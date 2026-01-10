@@ -13,9 +13,9 @@
 
 一个服务端 Fabric 模组，为
 <a href="https://modrinth.com/mod/yet-another-minecraft-bingo">Yet Another Bingo</a>
-提供共享团队箱子功能。
+提供共享队伍箱和队伍传送功能。
 
-同一 Bingo 团队中的玩家共享一个物品栏。
+同一 Bingo 团队中的玩家共享一个队伍箱。
 
 </center>
 
@@ -23,8 +23,8 @@
 
 ## 特性
 
-- 每个 Bingo 团队一个共享箱子
-- 支持客户端和服务器（客户端可用快捷键(默认为 "B") 和本地化）
+- 每个 Bingo 团队一个共享队伍箱
+- 支持客户端和服务器（客户端可用快捷键(默认为 "B") 和本地化翻译）
 - 游戏结束或重置时自动重置
 - 支持 Yet Another Bingo 所支持的所有 Minecraft 版本
 - 兼容所有现代 Fabric Loader 版本
@@ -33,12 +33,14 @@
 
 ## 命令
 
-| 命令 | 描述 |
-|------|------|
-| `/teamchest` | 打开你的团队共享箱子 |
+| 命令 | 描述               |
+|------|------------------|
+| `/teamchest` | 打开你的团队共享箱子       |
 | `/tc` | `/teamchest` 的简写 |
 | `/teamchest toggle` | 启用或禁用团队箱子（仅限 OP） |
-
+| `/teamtp`           | 使用队伍传送           |
+| `/ttp`              | `/teamtp` 的简写    |
+| `/tptoggle`         | 启用或禁用队伍传送（仅限 OP） |
 ---
 
 ## 需求

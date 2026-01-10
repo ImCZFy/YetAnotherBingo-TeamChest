@@ -13,7 +13,7 @@
 
 [English](README.md) | [简体中文](README_zh-CN.md)
 
-A server-side Fabric mod that provides a shared team chest for
+A server-side Fabric mod that provides a shared team chest and team teleport option for
 <a href="https://modrinth.com/mod/yet-another-minecraft-bingo">Yet Another Bingo</a>.
 
 Players in the same Bingo team share a single inventory.
@@ -35,12 +35,14 @@ Players in the same Bingo team share a single inventory.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `/teamchest` | Open your team's shared chest |
-| `/tc` | Alias for `/teamchest` |
-| `/teamchest toggle` | Enable or disable team chests (OP only) |
-
+| Command             | Description                               |
+|---------------------|-------------------------------------------|
+| `/teamchest`        | Open your team's shared chest             |
+| `/tc`               | Alias for `/teamchest`                    |
+| `/teamchest toggle` | Enable or disable team chests (OP only)   |
+| `/teamtp`           | Use team teleport                         |
+| `/ttp`              | Alias for `/teamtp`                       |
+| `/tptoggle`         | Enable or disable team teleport (OP only) |
 ---
 
 ## Requirements

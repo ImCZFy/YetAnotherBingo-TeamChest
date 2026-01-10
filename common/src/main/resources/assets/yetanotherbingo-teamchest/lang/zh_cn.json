@@ -1,5 +1,5 @@
 {
-  "yetanotherbingo-teamchest.message.toggle": "队伍箱现在已 ",
+  "yetanotherbingo-teamchest.message.toggle": "队伍箱现在已",
   "yetanotherbingo-teamchest.message.enabled": "启用",
   "yetanotherbingo-teamchest.message.disabled": "禁用",
   "yetanotherbingo-teamchest.error.players_only": "只有玩家可以使用此命令！",
@@ -9,6 +9,13 @@
   "yetanotherbingo-teamchest.error.no_team_id": "无法获取你的队伍 ID！",
   "yetanotherbingo-teamchest.container.team_chest": "队伍箱",
   "key.yetanotherbingo-teamchest.open": "打开队伍箱",
-  "category.yetanotherbingo-teamchest": "Yet Another Bingo 队伍箱"
+  "category.yetanotherbingo-teamchest": "Yet Another Bingo 队伍箱",
+  "yetanotherbingo-teamchest.message.team_teleport_success": "已传送至 %s。",
+  "yetanotherbingo-teamchest.error.not_in_same_team": "%s 不在你的队伍中！",
+  "yetanotherbingo-teamchest.message.team_teleport_notice": "%s 传送到了你的位置。",
+  "yetanotherbingo-teamchest.error.usage": "用法: /%s <玩家>",
+  "yetanotherbingo-teamchest.error.teleport_self": "你不能传送到你自己身边！",
+  "yetanotherbingo-teamchest.message.tptoggle": "队伍传送现在已",
+  "yetanotherbingo-teamchest.error.tpdisabled": "队伍传送目前已禁用！"
 }
 

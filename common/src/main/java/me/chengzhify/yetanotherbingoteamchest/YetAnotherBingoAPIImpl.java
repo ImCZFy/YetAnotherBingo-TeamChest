@@ -48,5 +48,19 @@ public class YetAnotherBingoAPIImpl {
         return false;
     }
 
+    public static boolean isInTheSameTeam(UUID executor, UUID target) {
+        if (isStarted()) {
+            if (isInTeam(executor) && isInTeam(target)) {
+                String executorTeamId = getTeamId(executor);
+                String targetTeamId = getTeamId(target);
+                return executorTeamId.equalsIgnoreCase(targetTeamId);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }
 

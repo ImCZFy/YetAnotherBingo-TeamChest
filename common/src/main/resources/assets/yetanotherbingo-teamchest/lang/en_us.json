@@ -9,6 +9,13 @@
   "yetanotherbingo-teamchest.error.no_team_id": "Cannot fetch your team ID!",
   "yetanotherbingo-teamchest.container.team_chest": "Team Chest",
   "key.yetanotherbingo-teamchest.open": "Open Team Chest",
-  "category.yetanotherbingo-teamchest": "Yet Another Bingo Team Chest"
+  "category.yetanotherbingo-teamchest": "Yet Another Bingo Team Chest",
+  "yetanotherbingo-teamchest.message.team_teleport_success": "Teleported to team member %s.",
+  "yetanotherbingo-teamchest.error.not_in_same_team": "%s is not in your team!",
+  "yetanotherbingo-teamchest.message.team_teleport_notice": "%s has teleported to you.",
+  "yetanotherbingo-teamchest.error.usage": "Usage: /%s <player>",
+  "yetanotherbingo-teamchest.error.teleport_self": "You cannot teleport to yourself!",
+  "yetanotherbingo-teamchest.message.tptoggle": "Team teleport is now ",
+  "yetanotherbingo-teamchest.error.tpdisabled": "Team teleport is now disabled!"
 }
 

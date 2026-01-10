@@ -120,14 +120,13 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
                                                 return 0;
                                             }
                                             if (YetAnotherBingoAPIImpl.isInTheSameTeam(sender.getUuid(), target.getUuid())) {
-                                                sender.teleport(target.getEntityWorld(),
+                                                sender.teleport(target.getServerWorld(),
                                                         target.getX(),
                                                         target.getY(),
                                                         target.getZ(),
                                                         EnumSet.noneOf(PositionFlag.class),
                                                         target.getYaw(),
-                                                        target.getPitch(),
-                                                        true);
+                                                        target.getPitch());
                                                 context.getSource().sendFeedback(
                                                         () -> Text.translatableWithFallback("yetanotherbingo-teamchest.message.team_teleport_success", "Teleported to team member %s.", target.getName().getString())
                                                                 .formatted(Formatting.GREEN),
@@ -202,14 +201,13 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
                                                 return 0;
                                             }
                                             if (YetAnotherBingoAPIImpl.isInTheSameTeam(sender.getUuid(), target.getUuid())) {
-                                                sender.teleport(target.getEntityWorld(),
+                                                sender.teleport(target.getServerWorld(),
                                                         target.getX(),
                                                         target.getY(),
                                                         target.getZ(),
                                                         EnumSet.noneOf(PositionFlag.class),
                                                         target.getYaw(),
-                                                        target.getPitch(),
-                                                        true);
+                                                        target.getPitch());
                                                 context.getSource().sendFeedback(
                                                         () -> Text.translatableWithFallback("yetanotherbingo-teamchest.message.team_teleport_success", "Teleported to team member %s.", target.getName().getString())
                                                                 .formatted(Formatting.GREEN),
