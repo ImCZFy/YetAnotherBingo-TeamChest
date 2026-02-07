@@ -37,6 +37,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
     @Override
     public void onInitialize() {
         ADAPTER = VersionAdapterProvider.get();
+        TeamChestConfig.load();
         ServerLifecycleEvents.SERVER_STARTED.register(s -> server = s);
         ServerLifecycleEvents.SERVER_STOPPED.register(s -> server = null);
         registerCommands();

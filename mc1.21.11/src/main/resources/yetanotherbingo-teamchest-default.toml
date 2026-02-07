@@ -1,0 +1,5 @@
+# YetAnotherBingo-TeamChest configuration
+
+[team_chest]
+# Team chest rows. Valid range: 1..6
+rows = 3
