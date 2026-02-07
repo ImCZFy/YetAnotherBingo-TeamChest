@@ -2,6 +2,7 @@ package me.chengzhify.yetanotherbingoteamchest.adapter.impl;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import me.chengzhify.yetanotherbingoteamchest.TeamChestConfig;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -31,7 +32,7 @@ public class TeamChestStateImpl extends PersistentState {
 
     public SimpleInventory getInventory(String teamId) {
         return teamInventories.computeIfAbsent(teamId, id -> {
-            SimpleInventory inv = new SimpleInventory(27);
+            SimpleInventory inv = new SimpleInventory(TeamChestConfig.getSize());
             inv.addListener(sender -> this.markDirty());
             return inv;
         });
