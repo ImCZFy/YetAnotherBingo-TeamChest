@@ -239,11 +239,6 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
     }
 
     private void registerBingoHooks() {
-        BingoEvents.GAME_ENDED.register((e) -> {
-            if (server != null) {
-                ADAPTER.clearAllTeamInventories(server);
-            }
-        });
         BingoEvents.GAME_RESET.register((e) -> {
             if (server != null) {
                 ADAPTER.clearAllTeamInventories(server);
