@@ -3,3 +3,9 @@
 [team_chest]
 # Team chest rows. Valid range: 1..6
 rows = 3
+# Whether /teamchest and /tc are enabled
+enabled = true
+
+[team_teleport]
+# Whether /teamtp and /ttp are enabled
+enabled = true

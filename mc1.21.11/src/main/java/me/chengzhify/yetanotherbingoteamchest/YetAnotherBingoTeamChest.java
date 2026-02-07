@@ -38,6 +38,8 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
     public void onInitialize() {
         ADAPTER = VersionAdapterProvider.get();
         TeamChestConfig.load();
+        tcEnabled = TeamChestConfig.isTeamChestEnabled();
+        tpEnabled = TeamChestConfig.isTeamTeleportEnabled();
         ServerLifecycleEvents.SERVER_STARTED.register(s -> server = s);
         ServerLifecycleEvents.SERVER_STOPPED.register(s -> server = null);
         registerCommands();
@@ -249,6 +251,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
 
     private int tcToggle(CommandContext<ServerCommandSource> ctx) {
         tcEnabled = !tcEnabled;
+        TeamChestConfig.persistToggleStates(tcEnabled, tpEnabled);
 
         ctx.getSource().sendFeedback(
                 () -> Text.translatableWithFallback("yetanotherbingo-teamchest.message.toggle", "Team chest is now ")
@@ -268,6 +271,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
 
     private int tpToggle(CommandContext<ServerCommandSource> ctx) {
         tpEnabled = !tpEnabled;
+        TeamChestConfig.persistToggleStates(tcEnabled, tpEnabled);
 
         ctx.getSource().sendFeedback(
                 () -> Text.translatableWithFallback("yetanotherbingo-teamchest.message.tptoggle", "Team teleport is now ")
