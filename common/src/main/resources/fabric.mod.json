@@ -35,10 +35,10 @@
   "environment": "*",
   "depends": {
     "fabricloader": ">=0.15.0",
-    "minecraft": ">=1.20",
+    "minecraft": ">=26.1",
     "fabric-api": "*",
-    "java": ">=21",
-    "fabric-key-binding-api-v1": "*",
+    "java": ">=25",
+    "fabric-key-mapping-api-v1": "*",
     "yet-another-minecraft-bingo": "*"
   },
   "suggests": {
