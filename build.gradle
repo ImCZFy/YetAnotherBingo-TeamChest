@@ -1,18 +1,16 @@
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT' apply false
-    id 'maven-publish'
+    id 'net.fabricmc.fabric-loom' version '1.15.5' apply false
     id "com.modrinth.minotaur" version "2.+" apply false
 }
-
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
-    apply plugin: 'fabric-loom'
     apply plugin: 'maven-publish'
     apply plugin: 'com.modrinth.minotaur'
-    group = "me.chengzhify"
-    version = "1.2.0-release"
+
+    group = project.maven_group
+    version = project.mod_version
 
     repositories {
         mavenCentral()
@@ -27,50 +25,81 @@ subprojects {
             name = "Fabric"
             url = "https://maven.fabricmc.net/"
         }
+        maven {
+            name = "LuckPerms"
+            url = "https://repo.lucko.me/"
+            content {
+                includeGroup("me.lucko")
+            }
+        }
     }
 
-    dependencies {
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
-        modImplementation "me.jfenn.bingo:api:2.9.3"
+    if (project.name != 'common') {
+        apply plugin: 'net.fabricmc.fabric-loom'
+
+        dependencies {
+            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
+            implementation "me.jfenn.bingo:api:2.10.0"
+        }
+
+        tasks.named("jar").configure {
+            destinationDirectory.set(file("${rootProject.projectDir}/build/libs"))
+        }
+
+        tasks.matching { it.name == "remapJar" }.configureEach {
+            destinationDirectory.set(file("${rootProject.projectDir}/build/libs"))
+        }
+
+        processResources {
+            inputs.property "version", project.version
+
+            filesMatching("fabric.mod.json") {
+                expand "version": project.version
+            }
+        }
+
+        afterEvaluate {
+            def remapJarTask = tasks.findByName("remapJar")
+            def uploadTask = remapJarTask ?: tasks.named("jar").get()
+
+            modrinth {
+                token = System.getenv("MODRINTH_TOKEN")
+                projectId = "LzfWcB6J"
+                versionNumber = "${project.version}-${project.name}"
+                versionType = "release"
+                uploadFile = uploadTask
+                gameVersions = [project.name.replace("mc", "")]
+                loaders = ["fabric"]
+                dependencies {
+                    required.project "fabric-api"
+                    required.project "yet-another-minecraft-bingo"
+                }
+            }
+        }
     }
 
     java {
-        toolchain.languageVersion = JavaLanguageVersion.of(21)
+        toolchain.languageVersion = JavaLanguageVersion.of(project.name == 'mc26.1' ? 25 : 21)
         withSourcesJar()
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
-    }
-
-    tasks.named("remapJar") {
-        destinationDirectory.set(file("${rootProject.projectDir}/build/libs"))
-    }
-
-    processResources {
-        inputs.property "version", project.version
-        filesMatching("fabric.mod.json") {
-            expand "version": project.version
-        }
-    }
-
-    modrinth {
-        token = System.getenv("MODRINTH_TOKEN") // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
-        projectId = "LzfWcB6J" // This can be the project ID or the slug. Either will work!
-        // 动态设置版本号，格式如: 1.1-SNAPSHOT-mc1.20.6
-        versionNumber = "${project.version}-${project.name}"
-        versionType = "release" // This is the default -- can also be `beta` or `alpha`
-        uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
-        // 动态提取游戏版本 (例如 mc1.20.6 -> 1.20.6)
-        gameVersions = [project.name.replace("mc", "")]
-        loaders = ["fabric"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
-        dependencies { // A special DSL for creating dependencies
-            required.project "fabric-api" // Creates a new required dependency on Fabric API
-            required.project "yet-another-minecraft-bingo"
-        }
+        it.options.release = project.name == 'mc26.1' ? 25 : 21
     }
 
     if (project.name == "common") {
+        tasks.withType(JavaCompile).configureEach {
+            enabled = false
+        }
+
+        tasks.withType(Jar).configureEach {
+            enabled = false
+        }
+
+        tasks.matching { it.name == "javadoc" }.configureEach {
+            enabled = false
+        }
+
         tasks.named("modrinth").configure {
             enabled = false
         }

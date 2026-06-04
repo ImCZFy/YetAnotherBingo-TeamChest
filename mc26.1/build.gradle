@@ -1,0 +1,15 @@
+dependencies {
+    minecraft libs.minecraft261
+    implementation libs.fabric.loader
+    implementation libs.fabricApi261
+}
+sourceSets {
+    main {
+        java.srcDirs += project(':common').sourceSets.main.java.srcDirs
+        resources.srcDirs += project(':common').sourceSets.main.resources.srcDirs
+    }
+}
+loom {
+    splitEnvironmentSourceSets()
+}
+base.archivesName = "YetAnotherBingo-TeamChest-mc26.1"

@@ -1,8 +1,1 @@
-dependencies {
-    minecraft libs.minecraft12110
-    mappings "net.fabricmc:yarn:1.21.10+build.3:v2"
-    modImplementation libs.fabric.loader
-    modImplementation libs.fabricApi12110
-}
-
-
+// Shared sources are compiled by the selected Minecraft version module.
