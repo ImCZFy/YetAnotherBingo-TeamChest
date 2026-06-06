@@ -31,16 +31,29 @@ public class TeamChestStateImpl extends SavedData {
     }
 
     public SimpleContainer getInventory(String teamId) {
-        return teamInventories.computeIfAbsent(teamId, id -> {
-            SimpleContainer inv = new SimpleContainer(TeamChestConfig.getSize()) {
-                @Override
-                public void setChanged() {
-                    super.setChanged();
-                    TeamChestStateImpl.this.setDirty();
-                }
-            };
-            return inv;
-        });
+        SimpleContainer inventory = teamInventories.computeIfAbsent(teamId, id -> createInventory());
+        int targetSize = TeamChestConfig.getSize();
+        if (inventory.getContainerSize() != targetSize) {
+            SimpleContainer resized = createInventory();
+            for (int i = 0; i < Math.min(inventory.getContainerSize(), resized.getContainerSize()); i++) {
+                resized.setItem(i, inventory.getItem(i));
+            }
+            teamInventories.put(teamId, resized);
+            setDirty();
+            return resized;
+        }
+
+        return inventory;
+    }
+
+    private SimpleContainer createInventory() {
+        return new SimpleContainer(TeamChestConfig.getSize()) {
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                TeamChestStateImpl.this.setDirty();
+            }
+        };
     }
 
     public static final Codec<TeamChestStateImpl> CODEC = RecordCodecBuilder.create(instance ->

@@ -57,6 +57,18 @@ public class YetAnotherBingoAPIImpl {
         return false;
     }
 
+    public static boolean isConfigEditable() {
+
+        IBingoApi api = BingoApi.getINSTANCE();
+        if (api == null) return true;
+
+        IBingoGame game = api.getGame();
+        if (game != null) {
+            return game.getStatus().equals(BingoGameStatus.PREGAME);
+        }
+        return true;
+    }
+
     public static boolean isInTheSameTeam(UUID executor, UUID target) {
         if (isStarted()) {
             if (isInTeam(executor) && isInTeam(target)) {

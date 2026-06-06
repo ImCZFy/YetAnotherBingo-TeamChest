@@ -23,8 +23,6 @@ import java.util.Set;
 public class YetAnotherBingoTeamChest implements ModInitializer {
 
     private static MinecraftServer server;
-    private static boolean tcEnabled = true;
-    private static boolean tpEnabled = true;
 
     private static VersionAdapter ADAPTER;
 
@@ -32,8 +30,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
     public void onInitialize() {
         ADAPTER = VersionAdapterProvider.get();
         TeamChestConfig.load();
-        tcEnabled = TeamChestConfig.isTeamChestEnabled();
-        tpEnabled = TeamChestConfig.isTeamTeleportEnabled();
+        ADAPTER.registerBingoInventoryProvider();
         ServerLifecycleEvents.SERVER_STARTED.register(s -> server = s);
         ServerLifecycleEvents.SERVER_STOPPED.register(s -> server = null);
         registerCommands();
@@ -48,6 +45,9 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
                             .then(Commands.literal("toggle")
                                     .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                                     .executes(this::tcToggle))
+                            .then(Commands.literal("config")
+                                    .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                                    .executes(this::openConfigMenu))
             );
 
             dispatcher.register(
@@ -56,6 +56,9 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
                             .then(Commands.literal("toggle")
                                     .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                                     .executes(this::tcToggle))
+                            .then(Commands.literal("config")
+                                    .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                                    .executes(this::openConfigMenu))
             );
 
             dispatcher.register(
@@ -90,19 +93,24 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
     }
 
     private int tcToggle(CommandContext<CommandSourceStack> ctx) {
-        tcEnabled = !tcEnabled;
-        TeamChestConfig.persistToggleStates(tcEnabled, tpEnabled);
+        if (!YetAnotherBingoAPIImpl.isConfigEditable()) {
+            ctx.getSource().sendFailure(error("yetanotherbingo-teamchest.error.config_locked", "Configuration can only be changed before the Bingo game starts."));
+            return 0;
+        }
+
+        boolean enabled = !TeamChestConfig.isTeamChestEnabled();
+        TeamChestConfig.setTeamChestEnabled(enabled);
 
         ctx.getSource().sendSuccess(
                 () -> Component.translatableWithFallback("yetanotherbingo-teamchest.message.toggle", "Team chest is now ")
                         .withStyle(ChatFormatting.GRAY)
                         .append(
                                 Component.translatableWithFallback(
-                                        tcEnabled
+                                        enabled
                                                 ? "yetanotherbingo-teamchest.message.enabled"
                                                 : "yetanotherbingo-teamchest.message.disabled",
-                                        tcEnabled ? "enabled" : "disabled"
-                                ).withStyle(tcEnabled ? ChatFormatting.GREEN : ChatFormatting.RED)),
+                                        enabled ? "enabled" : "disabled"
+                                ).withStyle(enabled ? ChatFormatting.GREEN : ChatFormatting.RED)),
                 true
         );
 
@@ -110,22 +118,43 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
     }
 
     private int tpToggle(CommandContext<CommandSourceStack> ctx) {
-        tpEnabled = !tpEnabled;
-        TeamChestConfig.persistToggleStates(tcEnabled, tpEnabled);
+        if (!YetAnotherBingoAPIImpl.isConfigEditable()) {
+            ctx.getSource().sendFailure(error("yetanotherbingo-teamchest.error.config_locked", "Configuration can only be changed before the Bingo game starts."));
+            return 0;
+        }
+
+        boolean enabled = !TeamChestConfig.isTeamTeleportEnabled();
+        TeamChestConfig.setTeamTeleportEnabled(enabled);
 
         ctx.getSource().sendSuccess(
                 () -> Component.translatableWithFallback("yetanotherbingo-teamchest.message.tptoggle", "Team teleport is now ")
                         .withStyle(ChatFormatting.GRAY)
                         .append(
                                 Component.translatableWithFallback(
-                                        tpEnabled
+                                        enabled
                                                 ? "yetanotherbingo-teamchest.message.enabled"
                                                 : "yetanotherbingo-teamchest.message.disabled",
-                                        tpEnabled ? "enabled" : "disabled"
-                                ).withStyle(tpEnabled ? ChatFormatting.GREEN : ChatFormatting.RED)),
+                                        enabled ? "enabled" : "disabled"
+                                ).withStyle(enabled ? ChatFormatting.GREEN : ChatFormatting.RED)),
                 true
         );
 
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private int openConfigMenu(CommandContext<CommandSourceStack> ctx) {
+        ServerPlayer player = ctx.getSource().getPlayer();
+        if (player == null) {
+            ctx.getSource().sendFailure(error("yetanotherbingo-teamchest.error.players_only", "Only players can use this command!"));
+            return 0;
+        }
+
+        if (!YetAnotherBingoAPIImpl.isConfigEditable()) {
+            ctx.getSource().sendFailure(error("yetanotherbingo-teamchest.error.config_locked", "Configuration can only be changed before the Bingo game starts."));
+            return 0;
+        }
+
+        ADAPTER.openConfigMenu(player);
         return Command.SINGLE_SUCCESS;
     }
 
@@ -142,7 +171,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
             return 0;
         }
 
-        if (!tpEnabled) {
+        if (!TeamChestConfig.isTeamTeleportEnabled()) {
             source.sendFailure(error("yetanotherbingo-teamchest.error.tpdisabled", "Team Teleport is now disabled!"));
             return 0;
         }
@@ -193,7 +222,7 @@ public class YetAnotherBingoTeamChest implements ModInitializer {
             return 0;
         }
 
-        if (!tcEnabled) {
+        if (!TeamChestConfig.isTeamChestEnabled()) {
             source.sendFailure(error("yetanotherbingo-teamchest.error.disabled", "Team chest is now disabled!"));
             return 0;
         }

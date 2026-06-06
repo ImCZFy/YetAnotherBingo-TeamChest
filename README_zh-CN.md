@@ -1,8 +1,6 @@
-<center>
+# Yet Another Bingo Team Chest
 
-# Yet Another Bingo – Team Chest
-
-[![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/supported/fabric_vector.svg)](https://fabricmc.net/)
+[![Fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/supported/fabric_vector.svg)](https://fabricmc.net/)
 [![Requires Fabric API](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/requires/fabric-api_vector.svg)](https://modrinth.com/mod/fabric-api)
 
 [![Available on Modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/yab-teamchest)
@@ -11,69 +9,89 @@
 
 [English](README.md) | 简体中文
 
-一个服务端 Fabric 模组，为
-<a href="https://modrinth.com/mod/yet-another-minecraft-bingo">Yet Another Bingo</a>
-提供共享队伍箱和队伍传送功能。
+这是一个用于 [Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo) 的 Fabric 模组，提供队伍共享箱、队伍传送，以及可选的 Bingo 物品判定集成。
 
-同一 Bingo 团队中的玩家共享一个队伍箱。
+当前分支面向 Minecraft 26.1 和 Yet Another Bingo API 2.10.0。
 
-</center>
+## 功能
 
----
+- 每个 Bingo 队伍拥有一个持久化共享队伍箱。
+- 队伍箱物品可以选择参与 Bingo 物品目标判定。
+- 支持 Bingo 的消耗物品模式，队伍箱中的匹配物品也可能被消耗。
+- 同队玩家之间可以使用队伍传送。
+- 可通过指令打开服务端配置 GUI。
+- 客户端安装后可使用快捷键打开队伍箱。
+- Bingo 游戏重置时会清空所有队伍箱。
 
-## 特性
+## 指令
 
-- 每个 Bingo 团队一个共享队伍箱
-- 支持客户端和服务器（客户端可用快捷键(默认为 "B") 和本地化翻译）
-- 游戏结束或重置时自动重置
-- 支持 Yet Another Bingo 所支持的所有 Minecraft 版本
-- 兼容所有现代 Fabric Loader 版本
+| 指令 | 说明 |
+| --- | --- |
+| `/teamchest` | 打开你所在队伍的共享箱 |
+| `/tc` | `/teamchest` 的别名 |
+| `/teamchest toggle` | 启用或禁用队伍箱，仅 OP |
+| `/tc toggle` | `/teamchest toggle` 的别名 |
+| `/teamchest config` | 打开配置 GUI，仅 OP |
+| `/tc config` | `/teamchest config` 的别名 |
+| `/teamtp <玩家>` | 传送到同队玩家 |
+| `/ttp <玩家>` | `/teamtp` 的别名 |
+| `/tptoggle` | 启用或禁用队伍传送，仅 OP |
 
----
+所有配置修改只能在 Bingo 游戏开始前进行。Bingo 离开准备阶段后，切换指令和配置 GUI 按钮都会拒绝修改配置。
 
-## 命令
+## 配置
 
-| 命令 | 描述               |
-|------|------------------|
-| `/teamchest` | 打开你的团队共享箱子       |
-| `/tc` | `/teamchest` 的简写 |
-| `/teamchest toggle` | 启用或禁用团队箱子（仅限 OP） |
-| `/teamtp`           | 使用队伍传送           |
-| `/ttp`              | `/teamtp` 的简写    |
-| `/tptoggle`         | 启用或禁用队伍传送（仅限 OP） |
----
+配置文件会生成在：
+
+```text
+config/yetanotherbingo-teamchest.toml
+```
+
+```toml
+[team_chest]
+rows = 3
+enabled = true
+
+[team_teleport]
+enabled = true
+
+[bingo]
+count_team_chest_items = true
+```
+
+`count_team_chest_items` 控制队伍箱物品是否作为额外玩家库存暴露给 Yet Another Bingo。启用后，队伍箱中的物品可以完成 Bingo 物品目标。如果 Bingo 开启了消耗物品模式，匹配物品也可能从队伍箱中被消耗。
 
 ## 需求
 
-- Minecraft **1.20 或更高版本**
-- Fabric Loader **0.15.0 或更高版本**
+- Minecraft 26.1
+- Java 25
+- Fabric Loader 0.15.0 或更新版本
 - Fabric API
-- Yet Another Bingo **2.9.0 或更高版本**
-- Java **21**
+- Yet Another Bingo 2.10.0 或更新版本
 
----
+## 安装
 
-## 安装（服务器）
+1. 安装 Fabric Server。
+2. 安装 Fabric API。
+3. 安装 Yet Another Bingo。
+4. 将 Team Chest jar 放入 `mods` 文件夹。
+5. 启动服务器。
 
-1. 安装 Fabric Server
-2. 安装 Fabric API
-3. 安装 Yet Another Bingo
-4. 将 `YetAnotherBingo-TeamChest.jar` 放入 `mods` 文件夹
-5. 启动服务器
+客户端也可以安装此模组，以使用快捷键和本地化。
 
-客户端可以安装此模组以享受快捷键和本地化功能。
+## 构建
 
----
+Windows 下仓库路径可能包含 `&`，请使用已经修复的 Gradle wrapper：
 
-## 兼容性
+```powershell
+.\gradlew.bat :mc26.1:build
+```
 
-此模组只需编译一次即可在以下环境运行：
+构建产物会输出到：
 
-- Minecraft 1.20 → 最新版本（已测试至 1.21.11）
-- Fabric 支持的所有 Fabric Loader 版本
-- Yet Another Bingo 支持的任何服务器配置
-
----
+```text
+build/libs/
+```
 
 ## 许可证
 

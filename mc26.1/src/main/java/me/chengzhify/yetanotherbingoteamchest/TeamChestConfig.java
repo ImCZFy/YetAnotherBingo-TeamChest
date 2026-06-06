@@ -16,16 +16,19 @@ public final class TeamChestConfig {
     private static final String TEMPLATE_NAME = "yetanotherbingo-teamchest-default.toml";
     private static final String SECTION_TEAM_CHEST = "team_chest";
     private static final String SECTION_TEAM_TELEPORT = "team_teleport";
+    private static final String SECTION_BINGO = "bingo";
 
     private static final int DEFAULT_ROWS = 3;
     private static final int MIN_ROWS = 1;
     private static final int MAX_ROWS = 6;
     private static final boolean DEFAULT_TEAM_CHEST_ENABLED = true;
     private static final boolean DEFAULT_TEAM_TELEPORT_ENABLED = true;
+    private static final boolean DEFAULT_COUNT_FOR_BINGO_ENABLED = true;
 
     private static int rows = DEFAULT_ROWS;
     private static boolean teamChestEnabled = DEFAULT_TEAM_CHEST_ENABLED;
     private static boolean teamTeleportEnabled = DEFAULT_TEAM_TELEPORT_ENABLED;
+    private static boolean countForBingoEnabled = DEFAULT_COUNT_FOR_BINGO_ENABLED;
 
     private TeamChestConfig() {}
 
@@ -39,6 +42,7 @@ public final class TeamChestConfig {
             rows = DEFAULT_ROWS;
             teamChestEnabled = DEFAULT_TEAM_CHEST_ENABLED;
             teamTeleportEnabled = DEFAULT_TEAM_TELEPORT_ENABLED;
+            countForBingoEnabled = DEFAULT_COUNT_FOR_BINGO_ENABLED;
             System.err.println("[YetAnotherBingo-TeamChest] Failed to load config, using default values.");
             e.printStackTrace();
         }
@@ -60,14 +64,41 @@ public final class TeamChestConfig {
         return teamTeleportEnabled;
     }
 
+    public static synchronized boolean isCountForBingoEnabled() {
+        return countForBingoEnabled;
+    }
+
+    public static synchronized void setRows(int rows) {
+        TeamChestConfig.rows = clampRows(rows);
+        persist();
+    }
+
+    public static synchronized void setTeamChestEnabled(boolean enabled) {
+        teamChestEnabled = enabled;
+        persist();
+    }
+
+    public static synchronized void setTeamTeleportEnabled(boolean enabled) {
+        teamTeleportEnabled = enabled;
+        persist();
+    }
+
+    public static synchronized void setCountForBingoEnabled(boolean enabled) {
+        countForBingoEnabled = enabled;
+        persist();
+    }
+
     public static synchronized void persistToggleStates(boolean teamChestEnabled, boolean teamTeleportEnabled) {
         TeamChestConfig.teamChestEnabled = teamChestEnabled;
         TeamChestConfig.teamTeleportEnabled = teamTeleportEnabled;
+        persist();
+    }
 
+    public static synchronized void persist() {
         try {
             writeConfig(getConfigPath());
         } catch (IOException e) {
-            System.err.println("[YetAnotherBingo-TeamChest] Failed to persist toggle config.");
+            System.err.println("[YetAnotherBingo-TeamChest] Failed to persist config.");
             e.printStackTrace();
         }
     }
@@ -95,6 +126,7 @@ public final class TeamChestConfig {
         int parsedRows = DEFAULT_ROWS;
         boolean parsedTeamChestEnabled = DEFAULT_TEAM_CHEST_ENABLED;
         boolean parsedTeamTeleportEnabled = DEFAULT_TEAM_TELEPORT_ENABLED;
+        boolean parsedCountForBingoEnabled = DEFAULT_COUNT_FOR_BINGO_ENABLED;
         String section = "";
 
         for (String line : lines) {
@@ -129,12 +161,15 @@ public final class TeamChestConfig {
                 }
             } else if (SECTION_TEAM_TELEPORT.equals(section) && "enabled".equals(key)) {
                 parsedTeamTeleportEnabled = parseBoolean(value, DEFAULT_TEAM_TELEPORT_ENABLED);
+            } else if (SECTION_BINGO.equals(section) && "count_team_chest_items".equals(key)) {
+                parsedCountForBingoEnabled = parseBoolean(value, DEFAULT_COUNT_FOR_BINGO_ENABLED);
             }
         }
 
         rows = clampRows(parsedRows);
         teamChestEnabled = parsedTeamChestEnabled;
         teamTeleportEnabled = parsedTeamTeleportEnabled;
+        countForBingoEnabled = parsedCountForBingoEnabled;
     }
 
     private static String stripInlineComment(String line) {
@@ -167,7 +202,11 @@ public final class TeamChestConfig {
                 + "\n"
                 + "[team_teleport]\n"
                 + "# Whether /teamtp and /ttp are enabled\n"
-                + "enabled = " + teamTeleportEnabled + "\n";
+                + "enabled = " + teamTeleportEnabled + "\n"
+                + "\n"
+                + "[bingo]\n"
+                + "# Whether team chest items are included in Bingo item scoring\n"
+                + "count_team_chest_items = " + countForBingoEnabled + "\n";
 
         Files.writeString(
                 configPath,

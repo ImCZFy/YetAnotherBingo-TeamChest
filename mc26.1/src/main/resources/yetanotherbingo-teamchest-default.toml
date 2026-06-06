@@ -9,3 +9,7 @@ enabled = true
 [team_teleport]
 # Whether /teamtp and /ttp are enabled
 enabled = true
+
+[bingo]
+# Whether team chest items are included in Bingo item scoring
+count_team_chest_items = true

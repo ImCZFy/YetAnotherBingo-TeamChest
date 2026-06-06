@@ -1,7 +1,10 @@
 package me.chengzhify.yetanotherbingoteamchest.adapter.impl;
 
+import me.chengzhify.yetanotherbingoteamchest.YetAnotherBingoAPIImpl;
 import me.chengzhify.yetanotherbingoteamchest.TeamChestConfig;
 import me.chengzhify.yetanotherbingoteamchest.adapter.VersionAdapter;
+import me.jfenn.bingo.api.BingoApi;
+import me.jfenn.bingo.api.provider.IInventoryProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,7 +15,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.MenuType;
 
+import java.util.List;
+
 public class BingoVersionAdapterImpl implements VersionAdapter {
+
+    private boolean inventoryProviderRegistered = false;
 
     public Container createTeamInventory() {
         return new SimpleContainer(TeamChestConfig.getSize());
@@ -36,6 +43,19 @@ public class BingoVersionAdapterImpl implements VersionAdapter {
         );
     }
 
+    public void openConfigMenu(ServerPlayer player) {
+        player.openMenu(TeamChestConfigMenu.provider());
+    }
+
+    public void registerBingoInventoryProvider() {
+        if (inventoryProviderRegistered) {
+            return;
+        }
+
+        BingoApi.registerInventoryProvider(new TeamChestInventoryProvider());
+        inventoryProviderRegistered = true;
+    }
+
     private ChestMenu createScreenHandler(int syncId, Inventory playerInventory, Container chestInventory) {
         int rows = TeamChestConfig.getRows();
         MenuType<ChestMenu> type = switch (rows) {
@@ -56,5 +76,27 @@ public class BingoVersionAdapterImpl implements VersionAdapter {
 
     public Component translatable(String key, String defaultText, Object... args) {
         return Component.translatableWithFallback(key, defaultText, args);
+    }
+
+    private static final class TeamChestInventoryProvider implements IInventoryProvider {
+        @Override
+        public List<Inventory> getInventories(ServerPlayer player) {
+            if (!TeamChestConfig.isTeamChestEnabled() || !TeamChestConfig.isCountForBingoEnabled()) {
+                return List.of();
+            }
+
+            MinecraftServer server = player.level().getServer();
+            if (server == null || !YetAnotherBingoAPIImpl.isStarted()) {
+                return List.of();
+            }
+
+            String teamId = YetAnotherBingoAPIImpl.getTeamId(player.getUUID());
+            if (teamId == null) {
+                return List.of();
+            }
+
+            Container inventory = TeamChestStateImpl.getServerState(server).getInventory(teamId);
+            return List.of(new TeamChestInventoryAdapter(player, inventory));
+        }
     }
 }

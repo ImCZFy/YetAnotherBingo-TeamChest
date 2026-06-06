@@ -16,6 +16,12 @@
   "yetanotherbingo-teamchest.error.usage": "Usage: /%s <player>",
   "yetanotherbingo-teamchest.error.teleport_self": "You cannot teleport to yourself!",
   "yetanotherbingo-teamchest.message.tptoggle": "Team teleport is now ",
-  "yetanotherbingo-teamchest.error.tpdisabled": "Team teleport is now disabled!"
+  "yetanotherbingo-teamchest.error.tpdisabled": "Team teleport is now disabled!",
+  "yetanotherbingo-teamchest.error.config_locked": "Configuration can only be changed before the Bingo game starts.",
+  "yetanotherbingo-teamchest.config.title": "Team Chest Config",
+  "yetanotherbingo-teamchest.config.team_chest": "Team Chest",
+  "yetanotherbingo-teamchest.config.bingo_scoring": "Count Chest Items for Bingo",
+  "yetanotherbingo-teamchest.config.team_teleport": "Team Teleport",
+  "yetanotherbingo-teamchest.config.rows": "Rows: %s",
+  "yetanotherbingo-teamchest.config.close": "Close"
 }
-

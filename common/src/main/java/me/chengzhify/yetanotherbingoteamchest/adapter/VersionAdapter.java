@@ -15,6 +15,10 @@ public interface VersionAdapter {
 
     void openTeamChest(ServerPlayer player, Container inventory, Component title);
 
+    void openConfigMenu(ServerPlayer player);
+
+    void registerBingoInventoryProvider();
+
     Component literal(String text);
 
     Component translatable(String key, String defaultText, Object... args);

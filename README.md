@@ -1,10 +1,6 @@
+# Yet Another Bingo Team Chest
 
-
-<center>
-
-# Yet Another Bingo – Team Chest
-
-[![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/supported/fabric_vector.svg)](https://fabricmc.net/)
+[![Fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/supported/fabric_vector.svg)](https://fabricmc.net/)
 [![Requires Fabric API](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/requires/fabric-api_vector.svg)](https://modrinth.com/mod/fabric-api)
 
 [![Available on Modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/yab-teamchest)
@@ -13,71 +9,90 @@
 
 English | [简体中文](README_zh-CN.md)
 
-A server-side Fabric mod that provides a shared team chest and team teleport option for
-<a href="https://modrinth.com/mod/yet-another-minecraft-bingo">Yet Another Bingo</a>.
+A Fabric mod for [Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo) that adds shared team chests, team teleport, and optional Bingo item-scoring integration.
 
-Players in the same Bingo team share a single inventory.
-
-</center>
-
----
+This branch targets Minecraft 26.1 and Yet Another Bingo API 2.10.0.
 
 ## Features
 
-
-- One shared chest per Bingo team
-- For clients and servers (Keybind(Default as "B") and localization available for clients)
-- Automatically resets when the Bingo game ends or resets
-- Supports all Minecraft versions supported by Yet Another Bingo
-- Compatible with all modern Fabric Loader versions
-
----
+- One persistent shared chest per Bingo team.
+- Team chest items can optionally count toward Bingo item objectives.
+- Supports Bingo consume-items mode through the shared team chest inventory.
+- Team teleport command for players in the same Bingo team.
+- Server-side configuration GUI opened by command.
+- Client keybind for opening the team chest when installed on the client.
+- Team chests are cleared when the Bingo game resets.
 
 ## Commands
 
-| Command             | Description                               |
-|---------------------|-------------------------------------------|
-| `/teamchest`        | Open your team's shared chest             |
-| `/tc`               | Alias for `/teamchest`                    |
-| `/teamchest toggle` | Enable or disable team chests (OP only)   |
-| `/teamtp`           | Use team teleport                         |
-| `/ttp`              | Alias for `/teamtp`                       |
-| `/tptoggle`         | Enable or disable team teleport (OP only) |
----
+| Command | Description |
+| --- | --- |
+| `/teamchest` | Open your team's shared chest |
+| `/tc` | Alias for `/teamchest` |
+| `/teamchest toggle` | Enable or disable team chests, OP only |
+| `/tc toggle` | Alias for `/teamchest toggle` |
+| `/teamchest config` | Open the config GUI, OP only |
+| `/tc config` | Alias for `/teamchest config` |
+| `/teamtp <player>` | Teleport to a player in your team |
+| `/ttp <player>` | Alias for `/teamtp` |
+| `/tptoggle` | Enable or disable team teleport, OP only |
+
+Configuration changes are only allowed before the Bingo game starts. Once Bingo leaves pregame, toggle commands and config GUI buttons will refuse to modify settings.
+
+## Configuration
+
+The config file is created at:
+
+```text
+config/yetanotherbingo-teamchest.toml
+```
+
+```toml
+[team_chest]
+rows = 3
+enabled = true
+
+[team_teleport]
+enabled = true
+
+[bingo]
+count_team_chest_items = true
+```
+
+`count_team_chest_items` controls whether items in the team chest are exposed to Yet Another Bingo as an extra player inventory. When enabled, items stored in the team chest can satisfy Bingo item objectives. If Bingo consume-items mode is enabled, matching items may also be consumed from the team chest.
 
 ## Requirements
 
-- Minecraft **1.20 or newer**
-- Fabric Loader **0.15.0 or newer**
+- Minecraft 26.1
+- Java 25
+- Fabric Loader 0.15.0 or newer
 - Fabric API
-- Yet Another Bingo **2.9.0 or newer**
-- Java **21**
+- Yet Another Bingo 2.10.0 or newer
 
----
+## Installation
 
-## Installation (Server)
+1. Install Fabric Server.
+2. Install Fabric API.
+3. Install Yet Another Bingo.
+4. Put the Team Chest jar into the `mods` folder.
+5. Start the server.
 
-1. Install Fabric Server
-2. Install Fabric API
-3. Install Yet Another Bingo
-4. Put `YetAnotherBingo-TeamChest.jar` into the `mods` folder
-5. Start the server
+Clients may also install this mod for the keybind and localization.
 
-Clients can install this mod to enjoy keybind and localization.
+## Building
 
----
+On Windows, this repository path may contain `&`, so use the fixed Gradle wrapper:
 
-## Compatibility
+```powershell
+.\gradlew.bat :mc26.1:build
+```
 
-This mod is compiled once and works across:
+The jar is written to:
 
-- Minecraft 1.20 → latest (tested up to 1.21.11)
-- All Fabric Loader versions supported by Fabric
-- Any server configuration supported by Yet Another Bingo
-
----
+```text
+build/libs/
+```
 
 ## License
 
 MIT License
-
