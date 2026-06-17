@@ -11,9 +11,92 @@ permissions:
   contents: write
 
 jobs:
-  debug:
-    name: Build debug jar
-    if: github.ref_type == 'branch'
+  changes:
+    name: Detect changed versions
+    runs-on: ubuntu-latest
+    outputs:
+      build_261: ${{ steps.detect.outputs.build_261 }}
+      build_262: ${{ steps.detect.outputs.build_262 }}
+      any: ${{ steps.detect.outputs.any }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed versions
+        id: detect
+        shell: bash
+        env:
+          BEFORE: ${{ github.event.before }}
+          REF_TYPE: ${{ github.ref_type }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$REF_TYPE" == "tag" ]]; then
+            base="$(git describe --tags --abbrev=0 "${GITHUB_SHA}^" 2>/dev/null || true)"
+            if [[ -z "$base" ]]; then
+              base="$(git rev-list --max-parents=0 "$GITHUB_SHA")"
+            fi
+          elif [[ -n "${BEFORE:-}" && "$BEFORE" != "0000000000000000000000000000000000000000" ]]; then
+            base="$BEFORE"
+          else
+            base="$(git rev-parse "${GITHUB_SHA}^" 2>/dev/null || git rev-list --max-parents=0 "$GITHUB_SHA")"
+          fi
+
+          changed="$(git diff --name-only "$base" "$GITHUB_SHA")"
+          echo "$changed"
+
+          shared=false
+          build_261=false
+          build_262=false
+
+          if echo "$changed" | grep -Eq '^common/'; then
+            shared=true
+          fi
+
+          if echo "$changed" | grep -Eq '^gradle\.properties$'; then
+            gradle_props_diff="$(git diff -U0 "$base" "$GITHUB_SHA" -- gradle.properties || true)"
+            if echo "$gradle_props_diff" | grep -Eq '^[+-]mod_version_26_1='; then
+              build_261=true
+            fi
+            if echo "$gradle_props_diff" | grep -Eq '^[+-]mod_version_26_2='; then
+              build_262=true
+            fi
+            if echo "$gradle_props_diff" | grep -Eq '^[+-](maven_group|archives_base_name|org\.gradle\.)='; then
+              shared=true
+            fi
+          fi
+
+          if echo "$changed" | grep -Eq '^mc26\.1/'; then
+            build_261=true
+          fi
+
+          if echo "$changed" | grep -Eq '^mc26\.2/'; then
+            build_262=true
+          fi
+
+          if [[ "$shared" == "true" ]]; then
+            build_261=true
+            build_262=true
+          fi
+
+          any=false
+          if [[ "$build_261" == "true" || "$build_262" == "true" ]]; then
+            any=true
+          fi
+
+          {
+            echo "build_261=$build_261"
+            echo "build_262=$build_262"
+            echo "any=$any"
+          } >> "$GITHUB_OUTPUT"
+
+  build-mc26-1:
+    name: Build MC 26.1 jar
+    needs: changes
+    if: needs.changes.outputs.build_261 == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -35,43 +118,104 @@ jobs:
       - name: Build
         run: ./gradlew :mc26.1:build
 
-      - name: Upload debug jar
+      - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
-          name: YetAnotherBingo-TeamChest-debug-${{ github.sha }}
-          path: build/libs/*.jar
+          name: mc26.1-jar
+          path: build/libs/*mc26.1*.jar
+          if-no-files-found: error
+          retention-days: 14
+
+  build-mc26-2:
+    name: Build MC 26.2 jar
+    needs: changes
+    if: needs.changes.outputs.build_262 == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Build
+        run: ./gradlew :mc26.2:build
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: mc26.2-jar
+          path: build/libs/*mc26.2*.jar
           if-no-files-found: error
           retention-days: 14
 
   release:
     name: Publish release
-    if: github.ref_type == 'tag'
+    needs:
+      - changes
+      - build-mc26-1
+      - build-mc26-2
+    if: always() && github.ref_type == 'tag' && needs.changes.outputs.any == 'true'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Download built jars
+        uses: actions/download-artifact@v4
         with:
-          distribution: temurin
-          java-version: 25
+          pattern: mc26.*-jar
+          path: release-assets
+          merge-multiple: true
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+      - name: Extract changelog
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
 
-      - name: Make Gradle wrapper executable
-        run: chmod +x gradlew
+          tag = os.environ["TAG_NAME"]
+          changelog = Path("CHANGELOG.md")
+          notes = Path("release-notes.md")
 
-      - name: Build
-        run: ./gradlew :mc26.1:build
+          if not changelog.exists():
+              notes.write_text(f"No changelog section found for {tag}.\n", encoding="utf-8")
+              raise SystemExit(0)
+
+          text = changelog.read_text(encoding="utf-8")
+          pattern = re.compile(
+              rf"^##\s+{re.escape(tag)}\s*$\n(?P<body>.*?)(?=^##\s+|\Z)",
+              re.MULTILINE | re.DOTALL,
+          )
+          match = pattern.search(text)
+
+          if match:
+              body = match.group("body").strip()
+          else:
+              body = f"No changelog section found for {tag}."
+
+          notes.write_text(body + "\n", encoding="utf-8")
+          PY
 
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG_NAME: ${{ github.ref_name }}
         run: |
-          gh release create "$TAG_NAME" build/libs/*.jar \
+          gh release create "$TAG_NAME" release-assets/*.jar \
             --title "$TAG_NAME" \
-            --generate-notes
+            --notes-file release-notes.md

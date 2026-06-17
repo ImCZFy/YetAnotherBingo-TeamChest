@@ -34,8 +34,8 @@
 
   "environment": "*",
   "depends": {
-    "fabricloader": ">=0.15.0",
-    "minecraft": ">=26.1",
+    "fabricloader": "${fabric_loader_dependency}",
+    "minecraft": "${minecraft_dependency}",
     "fabric-api": "*",
     "java": ">=25",
     "fabric-key-mapping-api-v1": "*",

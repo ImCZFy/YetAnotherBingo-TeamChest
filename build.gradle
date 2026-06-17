@@ -1,5 +1,5 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version '1.15.5' apply false
+    id 'net.fabricmc.fabric-loom' version '1.17.11' apply false
     id "com.modrinth.minotaur" version "2.+" apply false
 }
 
@@ -10,7 +10,13 @@ subprojects {
     apply plugin: 'com.modrinth.minotaur'
 
     group = project.maven_group
-    version = project.mod_version
+    if (project.name == "mc26.1") {
+        version = project.mod_version_26_1
+    } else if (project.name == "mc26.2") {
+        version = project.mod_version_26_2
+    } else {
+        version = project.findProperty("mod_version_26_2") ?: "0.0.0"
+    }
 
     repositories {
         mavenCentral()
@@ -37,9 +43,13 @@ subprojects {
     if (project.name != 'common') {
         apply plugin: 'net.fabricmc.fabric-loom'
 
+        def bingoApiVersion = project.name == "mc26.2" ? "2.11.0" : "2.10.0"
+        def minecraftDependency = project.name == "mc26.2" ? ">=26.2" : ">=26.1"
+        def fabricLoaderDependency = project.name == "mc26.2" ? ">=0.19.3" : ">=0.15.0"
+
         dependencies {
             implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
-            implementation "me.jfenn.bingo:api:2.10.0"
+            implementation "me.jfenn.bingo:api:${bingoApiVersion}"
         }
 
         tasks.named("jar").configure {
@@ -52,9 +62,15 @@ subprojects {
 
         processResources {
             inputs.property "version", project.version
+            inputs.property "minecraft_dependency", minecraftDependency
+            inputs.property "fabric_loader_dependency", fabricLoaderDependency
 
             filesMatching("fabric.mod.json") {
-                expand "version": project.version
+                expand(
+                        "version": project.version,
+                        "minecraft_dependency": minecraftDependency,
+                        "fabric_loader_dependency": fabricLoaderDependency
+                )
             }
         }
 
@@ -79,12 +95,12 @@ subprojects {
     }
 
     java {
-        toolchain.languageVersion = JavaLanguageVersion.of(project.name == 'mc26.1' ? 25 : 21)
+        toolchain.languageVersion = JavaLanguageVersion.of(project.name.startsWith('mc26.') ? 25 : 21)
         withSourcesJar()
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = project.name == 'mc26.1' ? 25 : 21
+        it.options.release = project.name.startsWith('mc26.') ? 25 : 21
     }
 
     if (project.name == "common") {

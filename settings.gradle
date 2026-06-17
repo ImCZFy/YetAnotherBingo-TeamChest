@@ -19,3 +19,4 @@ rootProject.name = 'YetAnotherBingo-TeamChest'
 
 include 'common'
 include 'mc26.1'
+include 'mc26.2'

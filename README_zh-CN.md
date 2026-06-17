@@ -11,7 +11,7 @@
 
 这是一个用于 [Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo) 的 Fabric 模组，提供队伍共享箱、队伍传送，以及可选的 Bingo 物品判定集成。
 
-当前分支面向 Minecraft 26.1 和 Yet Another Bingo API 2.10.0。
+当前分支面向 Minecraft 26.1 和 26.2。26.1 模块使用 Yet Another Bingo API 2.10.0，26.2 模块使用 Yet Another Bingo API 2.11.0。
 
 ## 功能
 
@@ -63,11 +63,11 @@ count_team_chest_items = true
 
 ## 需求
 
-- Minecraft 26.1
+- Minecraft 26.1 与 Yet Another Bingo API 2.10.0
+- Minecraft 26.2 与 Yet Another Bingo API 2.11.0
 - Java 25
-- Fabric Loader 0.15.0 或更新版本
+- 26.1 使用 Fabric Loader 0.15.0 或更新版本，26.2 使用 Fabric Loader 0.19.3 或更新版本
 - Fabric API
-- Yet Another Bingo 2.10.0 或更新版本
 
 ## 安装
 
@@ -84,7 +84,7 @@ count_team_chest_items = true
 Windows 下仓库路径可能包含 `&`，请使用已经修复的 Gradle wrapper：
 
 ```powershell
-.\gradlew.bat :mc26.1:build
+.\gradlew.bat :mc26.1:build :mc26.2:build
 ```
 
 构建产物会输出到：

@@ -11,7 +11,7 @@ English | [简体中文](README_zh-CN.md)
 
 A Fabric mod for [Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo) that adds shared team chests, team teleport, and optional Bingo item-scoring integration.
 
-This branch targets Minecraft 26.1 and Yet Another Bingo API 2.10.0.
+This branch targets Minecraft 26.1 and 26.2. The 26.1 module uses Yet Another Bingo API 2.10.0, and the 26.2 module uses Yet Another Bingo API 2.11.0.
 
 ## Features
 
@@ -63,11 +63,11 @@ count_team_chest_items = true
 
 ## Requirements
 
-- Minecraft 26.1
+- Minecraft 26.1 with Yet Another Bingo API 2.10.0
+- Minecraft 26.2 with Yet Another Bingo API 2.11.0
 - Java 25
-- Fabric Loader 0.15.0 or newer
+- Fabric Loader 0.15.0 or newer for 26.1, 0.19.3 or newer for 26.2
 - Fabric API
-- Yet Another Bingo 2.10.0 or newer
 
 ## Installation
 
@@ -84,7 +84,7 @@ Clients may also install this mod for the keybind and localization.
 On Windows, this repository path may contain `&`, so use the fixed Gradle wrapper:
 
 ```powershell
-.\gradlew.bat :mc26.1:build
+.\gradlew.bat :mc26.1:build :mc26.2:build
 ```
 
 The jar is written to:
