@@ -1,0 +1,35 @@
+allprojects {
+    afterEvaluate { p ->
+        if (p.name == 'mc26.3') {
+            dependencies.add('runtimeOnly', files(new File(rootProject.projectDir, 'build/verification/bingo-2.14.0+mc26.3.jar')))
+            fabricApi.configureTests {
+                createSourceSet = true
+                modId = 'teamchest-verification'
+                enableGameTests = false
+                enableClientGameTests = true
+                eula = false
+            }
+            sourceSets.gametest.java.setSrcDirs([new File(rootProject.projectDir, 'build/verification/gametest/java')])
+            sourceSets.gametest.resources.setSrcDirs([new File(rootProject.projectDir, 'build/verification/gametest/resources')])
+            loom.mods {
+                teamchest {
+                    sourceSet sourceSets.main
+                    sourceSet sourceSets.client
+                }
+            }
+        }
+    }
+}
+allprojects {
+    afterEvaluate { p ->
+        if (p.name == 'mc26.3') {
+            tasks.register('dumpVerificationLaunch') {
+                dependsOn tasks.named('compileGametestJava'), tasks.named('processGametestResources'), tasks.named('configureLaunch'), tasks.named('configureClientLaunch')
+                doLast {
+                    def task = tasks.named('runClientGameTest').get()
+                    new File(rootProject.projectDir, 'build/verification/launch.json').text = groovy.json.JsonOutput.toJson([jvmArgs:task.allJvmArgs, args:task.args, main:task.mainClass.get(), classpath:task.classpath.asPath, workingDir:task.workingDir.absolutePath, java:task.javaLauncher.get().executablePath.asFile.absolutePath])
+                }
+            }
+        }
+    }
+}

@@ -1,15 +1,21 @@
 [versions]
 minecraft-26-1 = "26.1.2"
 minecraft-26-2 = "26.2"
+minecraft-26-3 = "26.3"
 
 loader = "0.19.3"
+loader-26-3 = "0.19.5"
 fabric-api-26-1 = "0.150.0+26.1.2"
 fabric-api-26-2 = "0.152.1+26.2"
+fabric-api-26-3 = "0.161.0+26.3"
 
 [libraries]
 fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "loader" }
+fabricLoader263 = { module = "net.fabricmc:fabric-loader", version.ref = "loader-26-3" }
 fabricApi261 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-26-1" }
 fabricApi262 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-26-2" }
+fabricApi263 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api-26-3" }
 
 minecraft261 = { module = "com.mojang:minecraft", version.ref = "minecraft-26-1" }
 minecraft262 = { module = "com.mojang:minecraft", version.ref = "minecraft-26-2" }
+minecraft263 = { module = "com.mojang:minecraft", version.ref = "minecraft-26-3" }

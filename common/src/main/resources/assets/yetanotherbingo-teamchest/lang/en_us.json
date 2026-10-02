@@ -23,5 +23,6 @@
   "yetanotherbingo-teamchest.config.bingo_scoring": "Count Chest Items for Bingo",
   "yetanotherbingo-teamchest.config.team_teleport": "Team Teleport",
   "yetanotherbingo-teamchest.config.rows": "Rows: %s",
-  "yetanotherbingo-teamchest.config.close": "Close"
+  "yetanotherbingo-teamchest.config.close": "Close",
+  "yetanotherbingo-teamchest.error.no_permission": "You no longer have permission to change this configuration."
 }

@@ -14,6 +14,8 @@ subprojects {
         version = project.mod_version_26_1
     } else if (project.name == "mc26.2") {
         version = project.mod_version_26_2
+    } else if (project.name == "mc26.3") {
+        version = project.mod_version_26_3
     } else {
         version = project.findProperty("mod_version_26_2") ?: "0.0.0"
     }
@@ -43,9 +45,11 @@ subprojects {
     if (project.name != 'common') {
         apply plugin: 'net.fabricmc.fabric-loom'
 
-        def bingoApiVersion = project.name == "mc26.2" ? "2.11.0" : "2.10.0"
-        def minecraftDependency = project.name == "mc26.2" ? ">=26.2" : ">=26.1"
-        def fabricLoaderDependency = project.name == "mc26.2" ? ">=0.19.3" : ">=0.15.0"
+        def bingoApiVersion = ["mc26.1": "2.10.0", "mc26.2": "2.11.0", "mc26.3": "2.14.0"][project.name]
+        def minecraftDependency = ["mc26.1": ">=26.1", "mc26.2": ">=26.2", "mc26.3": ">=26.3 <26.4"][project.name]
+        def fabricLoaderDependency = ["mc26.1": ">=0.15.0", "mc26.2": ">=0.19.3", "mc26.3": ">=0.19.5"][project.name]
+        def fabricApiDependency = project.name == "mc26.3" ? ">=0.161.0+26.3" : "*"
+        def bingoDependency = project.name == "mc26.3" ? ">=2.14.0" : "*"
 
         dependencies {
             implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
@@ -64,12 +68,16 @@ subprojects {
             inputs.property "version", project.version
             inputs.property "minecraft_dependency", minecraftDependency
             inputs.property "fabric_loader_dependency", fabricLoaderDependency
+            inputs.property "fabric_api_dependency", fabricApiDependency
+            inputs.property "bingo_dependency", bingoDependency
 
             filesMatching("fabric.mod.json") {
                 expand(
                         "version": project.version,
                         "minecraft_dependency": minecraftDependency,
-                        "fabric_loader_dependency": fabricLoaderDependency
+                        "fabric_loader_dependency": fabricLoaderDependency,
+                        "fabric_api_dependency": fabricApiDependency,
+                        "bingo_dependency": bingoDependency
                 )
             }
         }

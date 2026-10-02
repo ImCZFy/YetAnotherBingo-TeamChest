@@ -1,0 +1,1 @@
+{"schemaVersion": 1, "id": "teamchest-verification", "version": "1.0.0", "environment": "*", "entrypoints": {"fabric-client-gametest": ["verification.TeamChestMultiplayerTest"], "main": ["verification.TeamChestServerVerification"]}}

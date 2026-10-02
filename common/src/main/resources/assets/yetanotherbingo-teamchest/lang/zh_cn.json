@@ -23,5 +23,6 @@
   "yetanotherbingo-teamchest.config.bingo_scoring": "队伍箱物品参与 Bingo 判定",
   "yetanotherbingo-teamchest.config.team_teleport": "队伍传送",
   "yetanotherbingo-teamchest.config.rows": "行数：%s",
-  "yetanotherbingo-teamchest.config.close": "关闭"
+  "yetanotherbingo-teamchest.config.close": "关闭",
+  "yetanotherbingo-teamchest.error.no_permission": "你已没有修改此配置的权限。"
 }

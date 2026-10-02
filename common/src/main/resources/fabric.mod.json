@@ -36,10 +36,10 @@
   "depends": {
     "fabricloader": "${fabric_loader_dependency}",
     "minecraft": "${minecraft_dependency}",
-    "fabric-api": "*",
+    "fabric-api": "${fabric_api_dependency}",
     "java": ">=25",
     "fabric-key-mapping-api-v1": "*",
-    "yet-another-minecraft-bingo": "*"
+    "yet-another-minecraft-bingo": "${bingo_dependency}"
   },
   "suggests": {
     "fabric-language-kotlin": "*"
