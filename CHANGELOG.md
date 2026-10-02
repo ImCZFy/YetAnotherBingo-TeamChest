@@ -2,15 +2,15 @@
 
 ## v1.3.3
 
-- Add a dedicated Minecraft 26.3 module with Yet Another Bingo API 2.14.0.
-- Use Fabric Loader 0.19.5, Fabric API 0.161.0+26.3, and Gradle 9.6.0 for the new target.
-- Use vanilla input constants for the open-chest keybind following Minecraft's SDL migration.
-- Include Minecraft 26.3 in CI builds and release artifacts.
-- Recheck operator permission when using the 26.3 config menu, closing it if permission has been revoked.
-- Verify shared inventories, isolation, concurrent item transfers, cross-dimension teleport, scoring, consumption, resets and restart persistence with three real clients.
+### Minecraft 26.3 support
+
+- Port Team Chest to Minecraft 26.3 and Yet Another Bingo API 2.14.0.
+- Update the open-chest key binding for Minecraft's SDL input system.
+- Fix a permission issue: revoking operator permission now immediately prevents further changes through an already-open configuration menu.
+
+Requires Minecraft 26.3, Java 25, Fabric Loader 0.19.5 or newer, Fabric API 0.161.0+26.3 or newer, and [Yet Another Bingo](https://modrinth.com/mod/yet-another-minecraft-bingo) 2.14.0 or newer.
 
 ## v1.3.2
 
 - Upgrade to Minecraft 26.2.
 - Update to Yet Another Bingo API 2.11.0 for Minecraft 26.2.
-
